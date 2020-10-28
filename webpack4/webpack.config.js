@@ -28,8 +28,12 @@ module.exports = {
     // another: './src/another-module.js'
   },
   output: {
-    filename: '[name].[contenthash].js', // content hash 内容变化才会变化
+    // filename: '[name].[contenthash].js', // content hash 内容变化才会变化
+    filename: 'webpack-numbers.js', // content hash 内容变化才会变化
     path: path.resolve(__dirname, 'dist'),
+    // 暴露 library 
+    library: 'webpackNumbers',
+    libraryTarget: 'umd'
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -58,5 +62,22 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  externals: {
+    // 外部化 lodash
+     lodash: {
+       commonjs: 'lodash',
+       commonjs2: 'lodash',
+       amd: 'lodash',
+       root: '_'
+     }
+   },
+   // 对于想要实现从一个依赖中调用多个文件的那些 library：
+  //  externals: [
+  //   'library/one',
+  //   'library/two',
+  //   // 匹配以 "library/" 开始的所有依赖
+  //   /^library\/.+$/
+  // ]
+
 };
